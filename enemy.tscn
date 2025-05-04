@@ -1,0 +1,33 @@
+[gd_scene load_steps=4 format=3 uid="uid://dc0v3a8g1q7ra"]
+
+[ext_resource type="Texture2D" uid="uid://dw3pd4irtetmn" path="res://assets/player.png" id="1_jc86x"]
+[ext_resource type="Script" uid="uid://dan8iy1x873ux" path="res://enemy.gd" id="1_qx3bt"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_8l6y3"]
+radius = 7.0
+height = 24.0
+
+[node name="Enemy" type="CharacterBody2D"]
+collision_layer = 4
+collision_mask = 0
+script = ExtResource("1_qx3bt")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CapsuleShape2D_8l6y3")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(0, -7)
+texture = ExtResource("1_jc86x")
+hframes = 6
+vframes = 10
+
+[node name="NavigationAgent2D" type="NavigationAgent2D" parent="."]
+path_desired_distance = 8.0
+target_desired_distance = 4.0
+avoidance_enabled = true
+avoidance_layers = 0
+avoidance_mask = 2
+debug_enabled = true
+debug_path_custom_color = Color(0.612299, 1.50409e-06, 5.77569e-07, 1)
+
+[connection signal="velocity_computed" from="NavigationAgent2D" to="." method="_on_navigation_agent_2d_velocity_computed"]
